@@ -67,10 +67,7 @@ namespace PlaywithRobo.BL
                 robo = CreateRobo(Convert.ToInt16(coodinate[1]), Convert.ToInt16(coodinate[2]), coodinate[3]);
                 table = new Table(5, 5, robo);
 
-                var isValidXCoordinate = table.IsValidXCoordinate();
-                var isValidYCoordinate = table.IsValidYCoordinate();
-
-                if (!isValidXCoordinate || !isValidYCoordinate)
+                if (!table.IsValidXCoordinate() || !table.IsValidYCoordinate())
                 {
                     errorMessage = errorMessageCoorinates;
                     return;
@@ -95,24 +92,24 @@ namespace PlaywithRobo.BL
 
                 case "move":
 
-                    //var isValidXCoordinate = table.IsValidXCoordinate();
-                    //var isValidYCoordinate = table.IsValidYCoordinate();
-
                     if((robo.direction == "east" || robo.direction == "west") && table.IsValidXCoordinate() && !table.reachedXCoordinate())
                         robo.Move();
-
-                    if ((robo.direction == "north" || robo.direction == "south") && table.IsValidYCoordinate() && !table.reachedYCoordinate())
+                    else if ((robo.direction == "north" || robo.direction == "south") && table.IsValidYCoordinate() && !table.reachedYCoordinate())
                         robo.Move();
 
                     break;
 
                 case "left":
                     robo.direction = robo.Left();
-                    
+                    robo = CreateRobo(robo.coordinateX, robo.coordinateY, robo.direction);
+                    table = new Table(5, 5, robo);
+
                     break;
 
                 case "right":
                     robo.direction = robo.Right();
+                    robo = CreateRobo(robo.coordinateX, robo.coordinateY, robo.direction);
+                    table = new Table(5, 5, robo);
 
                     break;
 
@@ -128,17 +125,8 @@ namespace PlaywithRobo.BL
         public Robot CreateRobo(int coordinateX, int coordinateY, string direction)
         {
             IDirectionFactory Factory = new DirectionFactory();
-            
-            if (direction == "east")
-                return Factory.CreateDirection(coordinateX, coordinateY, direction);
-            else if (direction == "west")
-                return Factory.CreateDirection(coordinateX, coordinateY, direction);
-            else if (direction == "north")
-                return Factory.CreateDirection(coordinateX, coordinateY, direction);
-            else if (direction == "south")
-                return Factory.CreateDirection(coordinateX, coordinateY, direction);
 
-            return null;
+            return Factory.CreateDirection(coordinateX, coordinateY, direction);
         }
         
         public string Report()

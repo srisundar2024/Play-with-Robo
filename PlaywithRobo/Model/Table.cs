@@ -46,7 +46,7 @@ namespace PlaywithRobo.Model
 
         public bool reachedYCoordinate()
         {
-            if (robot.coordinateY == 0 && robot.coordinateY == height)
+            if (robot.coordinateY == 0 || robot.coordinateY == height)
                 return true;
 
             return false;

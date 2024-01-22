@@ -98,5 +98,34 @@ namespace PlaywithRobo_UnitTest
 
             Assert.AreSame(robo.errorInvalidCommand, robo.errorMessage);            
         }
+
+        [TestMethod]
+        public void ValidateMultipleCommand()
+        {
+            Play robo = new Play();
+            robo.ExecuteCommand("PLACE 1,2,EAST");
+            robo.ExecuteCommand("MOVE");
+            robo.ExecuteCommand("LEFT");
+            robo.ExecuteCommand("MOVE");
+
+            Robot expected = robo.CreateRobo(2, 3, "north");
+
+            Assert.AreEqual(expected.Report(), robo.robo.Report());
+        }
+
+        [TestMethod]
+        public void ValidateMultipleCommand2()
+        {
+            Play robo = new Play();
+            robo.ExecuteCommand("PLACE 1,1,EAST");
+            robo.ExecuteCommand("MOVE");
+            robo.ExecuteCommand("RIGHT");
+            robo.ExecuteCommand("MOVE");
+            robo.ExecuteCommand("MOVE");
+
+            Robot expected = robo.CreateRobo(2, 0, "south");
+
+            Assert.AreEqual(expected.Report(), robo.robo.Report());
+        }
     }
 }
