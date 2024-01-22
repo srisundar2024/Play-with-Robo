@@ -20,7 +20,8 @@ namespace PlaywithRobo.BL
         public string errorMessage = "";
         public string errorMessageFormat = "format of PLACE command is invalid";
         public string errorMessageCoorinates = "Coorinates of PLACE command is invalid";
-            
+        public string errorInvalidCommand = "Robot not placed / invalid command";
+
         public Play()
         {
             
@@ -69,7 +70,7 @@ namespace PlaywithRobo.BL
                 var isValidXCoordinate = table.IsValidXCoordinate();
                 var isValidYCoordinate = table.IsValidYCoordinate();
 
-                if (isValidXCoordinate || isValidYCoordinate)
+                if (!isValidXCoordinate || !isValidYCoordinate)
                 {
                     errorMessage = errorMessageCoorinates;
                     return;
@@ -79,9 +80,13 @@ namespace PlaywithRobo.BL
             }            
             else
                 commandType = command;
-            
-            if (robo == null || !isRobotPlaced) return;
 
+            if (robo == null || !isRobotPlaced)
+            {
+                errorMessage = errorInvalidCommand;
+                return;
+            }
+            
             switch (commandType)
             {
                 case "place":                    
@@ -90,13 +95,13 @@ namespace PlaywithRobo.BL
 
                 case "move":
 
-                    var isValidXCoordinate = table.IsValidXCoordinate();
-                    var isValidYCoordinate = table.IsValidYCoordinate();
+                    //var isValidXCoordinate = table.IsValidXCoordinate();
+                    //var isValidYCoordinate = table.IsValidYCoordinate();
 
-                    if((robo.direction == "east" || robo.direction == "west") && isValidXCoordinate)
+                    if((robo.direction == "east" || robo.direction == "west") && table.IsValidXCoordinate() && !table.reachedXCoordinate())
                         robo.Move();
 
-                    if ((robo.direction == "north" || robo.direction == "south") && isValidYCoordinate)
+                    if ((robo.direction == "north" || robo.direction == "south") && table.IsValidYCoordinate() && !table.reachedYCoordinate())
                         robo.Move();
 
                     break;

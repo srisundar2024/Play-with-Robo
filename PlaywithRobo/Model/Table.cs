@@ -22,7 +22,7 @@ namespace PlaywithRobo.Model
 
         public bool IsValidXCoordinate()
         {
-            if (robot.coordinateX >= 0 && robot.coordinateX < width)
+            if (robot.coordinateX >= 0 && robot.coordinateX <= width)
                 return true;
 
             return false;
@@ -30,7 +30,23 @@ namespace PlaywithRobo.Model
 
         public bool IsValidYCoordinate()
         {
-            if (robot.coordinateY >= 0 && robot.coordinateY < height)
+            if (robot.coordinateY >= 0 && robot.coordinateY <= height)
+                return true;
+
+            return false;
+        }
+
+        public bool reachedXCoordinate()
+        {
+            if (robot.coordinateX == 0 || robot.coordinateX == width)
+                return true;
+
+            return false;
+        }
+
+        public bool reachedYCoordinate()
+        {
+            if (robot.coordinateY == 0 && robot.coordinateY == height)
                 return true;
 
             return false;
