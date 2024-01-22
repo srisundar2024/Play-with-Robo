@@ -12,11 +12,15 @@ namespace PlaywithRobo.BL
     public class Play
     {
         Table table;        
-        Robot robo;
+        public Robot robo;
 
         string[] commandList;
         bool isRobotPlaced = false;
 
+        public string errorMessage = "";
+        public string errorMessageFormat = "format of PLACE command is invalid";
+        public string errorMessageCoorinates = "Coorinates of PLACE command is invalid";
+            
         public Play()
         {
             
@@ -42,23 +46,34 @@ namespace PlaywithRobo.BL
             }
         }
         
-        void ExecuteCommand(string command)
+        public void ExecuteCommand(string command)
         {
             var commandType = "";
+            command = command.ToLower();
 
-            if(!isRobotPlaced && Regex.IsMatch(command, "^place"))
+            if (!isRobotPlaced && Regex.IsMatch(command, "^place"))
             {
                 commandType = "place";
 
                 if (command.Split(new[] { ',', ' '  }).Length != 4)
                 {
-                    throw new InvalidDataException("format of PLACE command is invalid");
+                    errorMessage = errorMessageFormat;
+                    return;
                 }
 
                 string[] coodinate = command.Split(new[] { ',', ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
                 robo = CreateRobo(Convert.ToInt16(coodinate[1]), Convert.ToInt16(coodinate[2]), coodinate[3]);
                 table = new Table(5, 5, robo);
+
+                var isValidXCoordinate = table.IsValidXCoordinate();
+                var isValidYCoordinate = table.IsValidYCoordinate();
+
+                if (isValidXCoordinate || isValidYCoordinate)
+                {
+                    errorMessage = errorMessageCoorinates;
+                    return;
+                }                    
 
                 isRobotPlaced = true;              
             }            
