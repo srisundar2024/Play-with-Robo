@@ -17,11 +17,14 @@ I have used the following concepts to develop this application, to implement Cod
 4) **Factory Design Pattern** - Created "IDirectionFactory" interface with a method "CreateDirection".
 "DirectionFactory" class will implement this interface to create only the class which is necessary dynamically based on the command
 
-**Steps to run this App:**
+**Steps to Clone & run this App:**
 
-Clone this repo: git clone git@github.com:srisundar2024/Play-with-Robo.git
+**Clone this repo:**
+git clone git@github.com:srisundar2024/Play-with-Robo.git
 
-Open the PlaywithRobo.sln and build as Release. Create a text file in the named "robo_test.txt" with list of commands on new lines. Navigate to the folder: ./PlaywithRobo/bin/Release Save this file in the above directory
+**Run PlaywithRobo (C# Console application)**
+
+Open the PlaywithRobo.sln and build as Release. Create a text file in the named "robo_test.txt" with list of commands on new lines. Navigate to the folder: ./PlaywithRobo/bin/Release Save this text file in the above folder
 
 **Example Command 1:**
 Input:
@@ -39,6 +42,8 @@ Input:
 	
 Output: 0,0,WEST
 
-**Run Project:** PlaywithRobo_UnitTest (C# Unit Test application)
+Then run the application and you will get the output in the console
 
-	run all the unit tests in the "UnitTest_AllCommands" file
+**Run PlaywithRobo_UnitTest (C# Unit Test application)**
+
+run all the unit tests in the "UnitTest_AllCommands" file
